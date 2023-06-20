@@ -9,12 +9,18 @@ import (
 type Game struct {
 	Screen    tcell.Screen
 	snakeBody SneakBody
+	apple     Apple
 }
 
 func drawParts(s tcell.Screen, parts []SnakePart, style tcell.Style) {
 	for _, part := range parts {
 		s.SetContent(part.X, part.Y, ' ', nil, style)
 	}
+}
+
+func drawApple(s tcell.Screen, a Apple, styleApple tcell.Style) {
+	position := a.randomPosition(s)
+	s.SetContent(position.P, position.T, '🍎', nil, styleApple)
 }
 
 func DrawBorder(s tcell.Screen, borderStyle tcell.Style, width int, height int) {
@@ -42,11 +48,13 @@ func (g *Game) Run() {
 	width, height := g.Screen.Size()
 	snakeStyle := tcell.StyleDefault.Background(tcell.ColorGreen).Foreground(tcell.ColorGreen)
 	borderStyle := tcell.StyleDefault.Background(tcell.ColorWhite).Foreground(tcell.ColorBlack)
-
+	styleApple := tcell.StyleDefault.Background(tcell.ColorWhite)
+	drawApple(g.Screen, g.apple, styleApple)
 	for {
 		g.Screen.Clear()
 		g.snakeBody.Update(width, height)
 		drawParts(g.Screen, g.snakeBody.Parts, snakeStyle)
+		drawApple(g.Screen, g.apple, styleApple)
 		DrawBorder(g.Screen, borderStyle, width, height)
 		time.Sleep(40 * time.Millisecond)
 		g.Screen.Show()
