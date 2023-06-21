@@ -37,7 +37,7 @@ func drawScore(s tcell.Screen, scr int, scoreStyle tcell.Style) {
 	text := strconv.Itoa(scr)
 	text1 := "Score : " + text
 	runes := []rune(text1)
-	s.SetContent(4, 4, ' ', runes, scoreStyle)
+	s.SetContent(3, 4, ' ', runes, scoreStyle)
 }
 func (g *Game) checkCollision(s tcell.Screen) {
 	for _, part := range g.snakeBody.Parts {
@@ -51,21 +51,21 @@ func (g *Game) checkCollision(s tcell.Screen) {
 }
 
 func DrawBorder(s tcell.Screen, borderStyle tcell.Style, width int, height int) {
-	s.SetContent(0, 0, '╔', nil, borderStyle)
-	for i := 1; i <= width-2; i++ {
-		s.SetContent(i, 0, '⠛', nil, borderStyle)
+	s.SetContent(4, 5, '╔', nil, borderStyle)
+	for i := 5; i <= width-5; i++ {
+		s.SetContent(i, 5, '⠛', nil, borderStyle)
 	}
-	s.SetContent(width-1, 0, '╗', nil, borderStyle)
-	s.SetContent(0, height-1, '╚', nil, borderStyle)
-	for j := 1; j <= width-2; j++ {
-		s.SetContent(j, height-1, '⠛', nil, borderStyle)
+	s.SetContent(width-4, 5, '╗', nil, borderStyle)
+	s.SetContent(4, height-5, '╚', nil, borderStyle)
+	for j := 5; j <= width-5; j++ {
+		s.SetContent(j, height-5, '⠛', nil, borderStyle)
 	}
-	s.SetContent(width-1, height-1, '╝', nil, borderStyle)
-	for k := 1; k <= height-2; k++ {
-		s.SetContent(0, k, '▒', nil, borderStyle)
+	s.SetContent(width-4, height-5, '╝', nil, borderStyle)
+	for k := 6; k <= height-6; k++ {
+		s.SetContent(4, k, '▒', nil, borderStyle)
 	}
-	for l := 1; l <= height-2; l++ {
-		s.SetContent(width-1, l, '▒', nil, borderStyle)
+	for l := 6; l <= height-6; l++ {
+		s.SetContent(width-4, l, '▒', nil, borderStyle)
 	}
 }
 
