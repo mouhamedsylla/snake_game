@@ -18,9 +18,19 @@ func drawParts(s tcell.Screen, parts []SnakePart, style tcell.Style) {
 	}
 }
 
-func drawApple(s tcell.Screen, a Apple, styleApple tcell.Style) {
-	position := a.randomPosition(s)
-	s.SetContent(position.P, position.T, '🍎', nil, styleApple)
+func drawApple(s tcell.Screen, styleApple tcell.Style, a Apple) {
+	x := a.P
+	y := a.T
+	s.SetContent(x, y, '🍎', nil, styleApple)
+}
+func (g *Game) checkCollision(s tcell.Screen) {
+	for _, part := range g.snakeBody.Parts {
+		if g.apple.P == part.X && g.apple.T == part.Y {
+			position := g.apple.randomPosition(s)
+			g.apple.P = position.P
+			g.apple.T = position.T
+		}
+	}
 }
 
 func DrawBorder(s tcell.Screen, borderStyle tcell.Style, width int, height int) {
@@ -48,15 +58,20 @@ func (g *Game) Run() {
 	width, height := g.Screen.Size()
 	snakeStyle := tcell.StyleDefault.Background(tcell.ColorGreen).Foreground(tcell.ColorGreen)
 	borderStyle := tcell.StyleDefault.Background(tcell.ColorWhite).Foreground(tcell.ColorBlack)
-	styleApple := tcell.StyleDefault.Background(tcell.ColorWhite)
-	drawApple(g.Screen, g.apple, styleApple)
+	styleApple := tcell.StyleDefault
+
+	g.apple.P = 10
+	g.apple.T = 10
+
 	for {
 		g.Screen.Clear()
 		g.snakeBody.Update(width, height)
+		drawApple(g.Screen, styleApple, g.apple)
 		drawParts(g.Screen, g.snakeBody.Parts, snakeStyle)
-		drawApple(g.Screen, g.apple, styleApple)
 		DrawBorder(g.Screen, borderStyle, width, height)
+		g.checkCollision(g.Screen)
 		time.Sleep(40 * time.Millisecond)
+
 		g.Screen.Show()
 	}
 }
