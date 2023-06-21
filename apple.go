@@ -14,9 +14,10 @@ type Apple struct {
 func (a *Apple) randomPosition(s tcell.Screen) Apple {
 	randomApple := *a
 	width, height := s.Size()
-	maxp, maxt := width-3, height-3
-	randomApple.P = rand.Intn(maxp + 1)
-	randomApple.T = rand.Intn(maxt + 1)
+	minp, mint := 5, 5
+	maxp, maxt := width-5, height-5
+	randomApple.P = rand.Intn(maxp-minp+1) + minp
+	randomApple.T = rand.Intn(maxt-mint+1) + mint
 
 	return randomApple
 }

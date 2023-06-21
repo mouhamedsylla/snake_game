@@ -28,12 +28,12 @@ func (sp *SnakePart) GetUpdatePart(sb *SneakBody, width, height int) SnakePart {
 	newPart := *sp
 
 	newPart.X = (newPart.X + sb.Xspeed) % width
-	if newPart.X < 0 {
+	if newPart.X < 0 || newPart.X >= width-5 || newPart.X <= 5 {
 		newPart.X += width
 	}
 
 	newPart.Y = (newPart.Y + sb.Yspeed) % height
-	if newPart.Y < 0 {
+	if newPart.Y < 0 || newPart.Y >= height-5 || newPart.Y <= 5 {
 		newPart.Y += height
 	}
 
