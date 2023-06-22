@@ -18,7 +18,7 @@ type Game struct {
 
 func drawParts(s tcell.Screen, parts []SnakePart, style tcell.Style) {
 	for _, part := range parts {
-		s.SetContent(part.X, part.Y, ' ', nil, style)
+		s.SetContent(part.X, part.Y, '░', nil, style)
 	}
 }
 
@@ -73,7 +73,7 @@ func (g *Game) Run() {
 	defStyle := tcell.StyleDefault.Background(tcell.ColorWhite).Foreground(tcell.ColorBlack)
 	g.Screen.SetStyle(defStyle)
 	width, height := g.Screen.Size()
-	snakeStyle := tcell.StyleDefault.Background(tcell.ColorGreen).Foreground(tcell.ColorGreen)
+	snakeStyle := tcell.StyleDefault.Background(tcell.ColorGreen).Foreground(tcell.ColorBlack)
 	borderStyle := tcell.StyleDefault.Background(tcell.ColorWhite).Foreground(tcell.ColorBlack)
 	styleApple := tcell.StyleDefault
 	textStyle := tcell.StyleDefault.Background(tcell.ColorWhite).Foreground(tcell.ColorGreen)
@@ -91,7 +91,7 @@ func (g *Game) Run() {
 		drawParts(g.Screen, g.snakeBody.Parts, snakeStyle)
 		drawApple(g.Screen, styleApple, g.apple)
 		time.Sleep(60 * time.Millisecond)
-		drawText(g.Screen, "Snake Game", textStyle)
+		drawText(g.Screen, "Snake Game 🐍", textStyle)
 		g.Screen.Show()
 	}
 
